@@ -1,0 +1,28 @@
+main: me.wikyfg.ane.ANEMain
+author: Wikijito7
+name: ANE
+version: 0.2
+
+api-version: 1.13
+
+commands:
+  ANE:
+    description: El comando principal del plugin
+  back:
+    description: Te teletransporta a la posición anterior.
+  home:
+    description: Te teletransporta al punto que hayas guardado como una casa.
+  sethome:
+    description: Guardas un punto como una casa.
+  spawn:
+    description: Te teletransporta al spawn del mundo.
+  homelist:
+    description: Te enseña la lista de tus casas.
+  pagar:
+    description: Paga a quien quieras x cantidad.
+  balance:
+    description: Te muestra cuanto dinero tienes.
+  tp:
+    description: Te teletransporta a alguien o a un lugar indicado.
+  jail:
+    description: Te mete en la carcel.
