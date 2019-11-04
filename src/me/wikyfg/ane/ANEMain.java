@@ -53,6 +53,10 @@ public class ANEMain extends JavaPlugin {
         getCommand("pagar").setExecutor(new PayCMD(this));
         getCommand("balance").setExecutor(new Balance(this));
         getCommand("jail").setExecutor(new Jail(this));
+        getCommand("day").setExecutor(new Day(this));
+        getCommand("night").setExecutor(new Night(this));
+        getCommand("rain").setExecutor(new Rain(this));
+        getCommand("sun").setExecutor(new Sun(this));
     }
 
     private void loadEvents(){

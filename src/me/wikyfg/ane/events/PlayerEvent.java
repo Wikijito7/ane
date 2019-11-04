@@ -2,6 +2,7 @@ package me.wikyfg.ane.events;
 
 import me.wikyfg.ane.ANEMain;
 import me.wikyfg.ane.files.Files;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +15,7 @@ import java.util.Random;
 public class PlayerEvent implements Listener {
 
     private ANEMain main;
+    private int sleepingPlayers = 0;
 
     public PlayerEvent(ANEMain main){
         this.main = main;
@@ -45,8 +47,8 @@ public class PlayerEvent implements Listener {
                 "&c{player} ha salido, ¡por fin!",
                 "&c¡Se ha ido {player}! ¡Menos mal!",
                 "&c¿Quien ha invitado a {player}?",
-                "&c¡Bieeeeeeen! Ha entrado {player}.",
-                "&cÉramos pocos y la abuela parió a {player}..",
+                "&c{player} ha ido a defender la libertad de los presos políticos.",
+                "&cC fué {player}..",
                 "&c¡Adió {player}!",
                 "&c{player}??!?!?!?!111",
                 "&c- &r{player}.",
@@ -75,8 +77,7 @@ public class PlayerEvent implements Listener {
 
     @EventHandler
     public void onPlayerCommand(PlayerCommandPreprocessEvent e){
-
-        if (e.getMessage().equalsIgnoreCase("/kill") && e.getPlayer().getName().startsWith("Leti")) e.setCancelled(true);
+        //if (e.getMessage().equalsIgnoreCase("/kill") && e.getPlayer().getName().startsWith("Leti")) e.setCancelled(true);
 
         Player p = e.getPlayer();
         if(!Files.userdata.contains(p.getName() + ".jail")) {
@@ -103,6 +104,24 @@ public class PlayerEvent implements Listener {
         if(Files.userdata.get(p.getName() + ".jail").equals("true")){
             p.sendMessage(ChatColor.DARK_RED + "Estás encarcelado, piensa lo que hiciste e intentalo de nuevo más tarde.");
             e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerBedEnterEvent(PlayerBedEnterEvent e){
+        sleepingPlayers++;
+        Bukkit.broadcastMessage(ChatColor.GOLD + e.getPlayer().getName() + ChatColor.YELLOW + " ha entrado en la cama." + ChatColor.GOLD + "(" + sleepingPlayers + "/" +  Bukkit.getServer().getOnlinePlayers().size() + ")");
+        if(sleepingPlayers != 0 && sleepingPlayers >= Bukkit.getServer().getOnlinePlayers().size()/2){
+            e.getPlayer().getWorld().setTime(1000);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "Se hizo de día, ¡a trabajar putos andaluces!");
+            sleepingPlayers = 0;
+        }
+    }
+
+    public void onPlayerBedLeaveEvent(PlayerBedLeaveEvent e){
+        if(sleepingPlayers > 0){
+            sleepingPlayers--;
+            Bukkit.broadcastMessage(ChatColor.GOLD + e.getPlayer().getName() + ChatColor.YELLOW +" se ha levantado." + ChatColor.GOLD + "(" + sleepingPlayers + "/" +  Bukkit.getServer().getOnlinePlayers().size() + ")");
         }
     }
 

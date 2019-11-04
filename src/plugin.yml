@@ -26,3 +26,11 @@ commands:
     description: Te teletransporta a alguien o a un lugar indicado.
   jail:
     description: Te mete en la carcel.
+  day:
+    description: Hace de dia.
+  night:
+    description: Hace de noche.
+  rain:
+    description: Hace que llueva.
+  sun:
+    description: Hace que pare de llover.
