@@ -21,6 +21,7 @@ public class DeathEvent implements Listener {
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onDeath(PlayerDeathEvent e){
         Player p = e.getEntity();
+
         System.out.println(p.getName() + " ha muerto.");
         String coords = p.getLocation().getX() + "," + p.getLocation().getY() + "," + p.getLocation().getZ() + "," + p.getLocation().getWorld().getName();
         Files.userdata.set(p.getName() + ".back", coords);
