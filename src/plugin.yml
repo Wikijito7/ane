@@ -34,3 +34,5 @@ commands:
     description: Hace que llueva.
   sun:
     description: Hace que pare de llover.
+  savexp:
+    description: Guarda la experiencia.

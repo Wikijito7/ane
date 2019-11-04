@@ -57,6 +57,7 @@ public class ANEMain extends JavaPlugin {
         getCommand("night").setExecutor(new Night(this));
         getCommand("rain").setExecutor(new Rain(this));
         getCommand("sun").setExecutor(new Sun(this));
+        getCommand("savexp").setExecutor(new Saveexp(this));
     }
 
     private void loadEvents(){
