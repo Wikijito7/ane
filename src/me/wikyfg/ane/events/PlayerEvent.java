@@ -4,11 +4,14 @@ import me.wikyfg.ane.ANEMain;
 import me.wikyfg.ane.files.Files;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
@@ -117,11 +120,22 @@ public class PlayerEvent implements Listener {
             sleepingPlayers = 0;
         }
     }
-
+    @EventHandler
     public void onPlayerBedLeaveEvent(PlayerBedLeaveEvent e){
         if(sleepingPlayers > 0){
             sleepingPlayers--;
             Bukkit.broadcastMessage(ChatColor.GOLD + e.getPlayer().getName() + ChatColor.YELLOW +" se ha levantado." + ChatColor.GOLD + "(" + sleepingPlayers + "/" +  Bukkit.getServer().getOnlinePlayers().size() + ")");
+        }
+    }
+    @EventHandler
+    public void onClick(PlayerInteractEvent e){
+        Player p = e.getPlayer();
+        ItemStack item = new ItemStack(Material.PAPER);
+        item.addEnchantment(Enchantment.DURABILITY, 5);
+        if(p.getInventory().getItemInMainHand() == item){
+            String name = p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().split(" ")[0];
+            p.setExp(p.getExp() + Float.parseFloat(name));
+            p.getInventory().remove(p.getInventory().getItemInMainHand());
         }
     }
 

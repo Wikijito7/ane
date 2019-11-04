@@ -68,9 +68,9 @@ public class ANECommand implements CommandExecutor {
             if(args.length == 2){
                 if(args[0].equalsIgnoreCase("balance") || args[0].equalsIgnoreCase("money")){
                     Player pl = main.getServer().getPlayer(args[1]);
-                    if(pl != null) {
+                    if (pl != null) {
                         p.sendMessage(ChatColor.GREEN + pl.getName() +" tiene " + String.valueOf(dFormat.format(main.eco.getBalance(pl))).replace(".", ",") + " macacoins.");
-                    }else{
+                    } else {
                         p.sendMessage(ChatColor.RED + "Ese jugador no existe o no está conectado.");
                     }
                 }
