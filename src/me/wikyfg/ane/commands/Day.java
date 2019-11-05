@@ -22,6 +22,7 @@ public class Day implements CommandExecutor {
             p.sendMessage(ChatColor.RED + "Te has confundido de argumentos, prueba a poner /day.");
             return false;
         }
+        p.sendMessage(ChatColor.GOLD + "Tiempo cambiado a de día.");
         p.getWorld().setTime(1000);
         return false;
     }

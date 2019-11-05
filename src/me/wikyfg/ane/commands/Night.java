@@ -22,7 +22,8 @@ public class Night implements CommandExecutor {
             p.sendMessage(ChatColor.RED + "Te has confundido de argumentos, prueba a poner /night.");
             return false;
         }
-        p.getWorld().setTime(1000);
+        p.sendMessage(ChatColor.GOLD + "Tiempo cambiado a de noche.");
+        p.getWorld().setTime(18000);
         return false;
     }
 

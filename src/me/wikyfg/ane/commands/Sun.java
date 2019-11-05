@@ -23,6 +23,7 @@ public class Sun implements CommandExecutor {
             return false;
         }
         p.getWorld().setStorm(false);
+        p.sendMessage(ChatColor.GOLD + "Clima cambiado a soleado.");
         p.getWorld().setWeatherDuration(20000);
         return false;
     }

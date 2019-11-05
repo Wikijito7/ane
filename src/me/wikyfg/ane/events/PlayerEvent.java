@@ -131,7 +131,7 @@ public class PlayerEvent implements Listener {
     public void onClick(PlayerInteractEvent e){
         Player p = e.getPlayer();
         ItemStack item = new ItemStack(Material.PAPER);
-        item.addEnchantment(Enchantment.DURABILITY, 5);
+        item.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
         if(p.getInventory().getItemInMainHand() == item){
             String name = p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().split(" ")[0];
             p.setExp(p.getExp() + Float.parseFloat(name));

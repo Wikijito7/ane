@@ -23,6 +23,7 @@ public class Rain implements CommandExecutor {
             return false;
         }
         p.getWorld().setStorm(true);
+        p.sendMessage(ChatColor.GOLD + "Clima cambiado a lluvia.");
         p.getWorld().setWeatherDuration(20000);
         return false;
     }

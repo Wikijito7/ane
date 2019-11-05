@@ -24,12 +24,12 @@ public class Saveexp implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
-        if (args.length != 2) {
+        if (args.length != 1) {
             p.sendMessage(ChatColor.RED + "Te has confundido de argumentos, prueba a poner /saveexp <quantity>/all.");
             return false;
         }
 
-        if (args[1].equalsIgnoreCase("all")){
+        if (args[0].equalsIgnoreCase("all")){
             item.setAmount(1);
             item.addEnchantment(Enchantment.DURABILITY, 5);
             item.getItemMeta().setDisplayName(ChatColor.DARK_PURPLE + String.valueOf(p.getExp()) + " xp");
@@ -38,7 +38,7 @@ public class Saveexp implements CommandExecutor {
             return false;
         }
 
-        if (Numeric.isNumeric(args[1])){
+        if (Numeric.isNumeric(args[0])){
             if (p.getExp() < Float.parseFloat(args[1])){
                 p.sendMessage(ChatColor.RED + "No tienes tanta experiencia (" + p.getExp() + ")");
                 return false;
