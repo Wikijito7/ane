@@ -6,10 +6,13 @@ import me.wikyfg.ane.events.PlayerEvent;
 import me.wikyfg.ane.files.Files;
 import me.wikyfg.ane.utils.Utils;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
 
 public class ANEMain extends JavaPlugin {
     public Files files;

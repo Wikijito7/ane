@@ -1,6 +1,7 @@
 package me.wikyfg.ane.events;
 
 import me.wikyfg.ane.ANEMain;
+import me.wikyfg.ane.api.ExperienceAPI;
 import me.wikyfg.ane.files.Files;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -113,8 +114,12 @@ public class PlayerEvent implements Listener {
     @EventHandler
     public void onPlayerBedEnterEvent(PlayerBedEnterEvent e){
         sleepingPlayers++;
-        Bukkit.broadcastMessage(ChatColor.GOLD + e.getPlayer().getName() + ChatColor.YELLOW + " ha entrado en la cama." + ChatColor.GOLD + "(" + sleepingPlayers + "/" +  Bukkit.getServer().getOnlinePlayers().size() + ")");
-        if(sleepingPlayers != 0 && sleepingPlayers >= Bukkit.getServer().getOnlinePlayers().size()/2){
+        Bukkit.broadcastMessage(ChatColor.GOLD + e.getPlayer().getName() + ChatColor.YELLOW + " ha entrado en la cama." + ChatColor.GOLD + " (" + sleepingPlayers + "/" +  Bukkit.getServer().getOnlinePlayers().size() + ")");
+        if(sleepingPlayers != 0 && sleepingPlayers >= Bukkit.getServer().getOnlinePlayers().size()/2 && Bukkit.getServer().getOnlinePlayers().size() > 1){
+            if (e.getPlayer().getWorld().getTime() > 12000){
+
+                return;
+            }
             e.getPlayer().getWorld().setTime(1000);
             Bukkit.broadcastMessage(ChatColor.GOLD + "Se hizo de día, ¡a trabajar putos andaluces!");
             sleepingPlayers = 0;
@@ -131,10 +136,10 @@ public class PlayerEvent implements Listener {
     public void onClick(PlayerInteractEvent e){
         Player p = e.getPlayer();
         ItemStack item = new ItemStack(Material.PAPER);
-        item.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-        if(p.getInventory().getItemInMainHand() == item){
+        ExperienceAPI experienceAPI = new ExperienceAPI(p);
+        if(p.getInventory().getItemInMainHand().getType() == Material.PAPER) {
             String name = p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().split(" ")[0];
-            p.setExp(p.getExp() + Float.parseFloat(name));
+            experienceAPI.changeExp(Integer.parseInt(name));
             p.getInventory().remove(p.getInventory().getItemInMainHand());
         }
     }

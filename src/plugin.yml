@@ -1,7 +1,7 @@
 main: me.wikyfg.ane.ANEMain
 author: Wikijito7
 name: ANE
-version: 0.2
+version: 0.3
 
 api-version: 1.13
 
@@ -24,15 +24,21 @@ commands:
     description: Te muestra cuanto dinero tienes.
   tp:
     description: Te teletransporta a alguien o a un lugar indicado.
+    default: op
   jail:
     description: Te mete en la carcel.
+    default: op
   day:
     description: Hace de dia.
+    default: op
   night:
     description: Hace de noche.
+    default: op
   rain:
     description: Hace que llueva.
+    default: op
   sun:
     description: Hace que pare de llover.
+    default: op
   savexp:
     description: Guarda la experiencia.

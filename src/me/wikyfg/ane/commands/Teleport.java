@@ -22,6 +22,11 @@ public class Teleport implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
 
+        if (!p.isOp()){
+            p.sendMessage(ChatColor.RED + "Lo siento, no tienes permisos para hacer esto.");
+            return false;
+        }
+
         if(cmd.getName().equalsIgnoreCase("tp") || cmd.getName().equalsIgnoreCase("teleport")){
             if(args.length == 0){
                 p.sendMessage(ChatColor.RED + "Illo, creo que te faltan argumentos. /tp <nombre>, /tp <nombre> <nombre> ó /tp <x> <y> <z>");

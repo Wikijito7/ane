@@ -18,6 +18,11 @@ public class Night implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
+        if (!p.isOp()){
+            p.sendMessage(ChatColor.RED + "Lo siento, no tienes permisos para hacer esto.");
+            return false;
+        }
+
         if (args.length > 0){
             p.sendMessage(ChatColor.RED + "Te has confundido de argumentos, prueba a poner /night.");
             return false;

@@ -32,11 +32,12 @@ public class ANECommand implements CommandExecutor {
                 p.sendMessage(ChatColor.GOLD + "/spawn: " + ChatColor.GREEN + "Te envia al spawn del mundo."); //ToDo: Posibilidad de modificar el spawn del mundo(/setspawn???)
                 p.sendMessage(ChatColor.GOLD + "/home: " + ChatColor.GREEN + "Te envia al lugar que hayas seleccionado como casa."); //ToDo: /homelist????
                 p.sendMessage(ChatColor.GOLD + "/sethome (<nombre>): " + ChatColor.GREEN + "Pone ese punto como tu hogar con el nombre indicado.");
+                p.sendMessage(ChatColor.GOLD + "/homelist: " + ChatColor.GREEN + "Te muestra la lista de todas tus casa.");
                 p.sendMessage(ChatColor.GOLD + "/back: " + ChatColor.GREEN + "Te envia a la localización previa.");
-                p.sendMessage(ChatColor.GOLD + "/day: " + ChatColor.GREEN + "Hace de día.");
-                p.sendMessage(ChatColor.GOLD + "/night: " + ChatColor.GREEN + "Hace de noche.");
-                p.sendMessage(ChatColor.GOLD + "/sun: " + ChatColor.GREEN + "Quita la lluvia.");
-                p.sendMessage(ChatColor.GOLD + "/rain: " + ChatColor.GREEN + "Hace que llueva.");
+                if (p.isOp()) p.sendMessage(ChatColor.GOLD + "/day: " + ChatColor.GREEN + "Hace de día.");
+                if (p.isOp()) p.sendMessage(ChatColor.GOLD + "/night: " + ChatColor.GREEN + "Hace de noche.");
+                if (p.isOp()) p.sendMessage(ChatColor.GOLD + "/sun: " + ChatColor.GREEN + "Quita la lluvia.");
+                if (p.isOp()) p.sendMessage(ChatColor.GOLD + "/rain: " + ChatColor.GREEN + "Hace que llueva.");
             }
 
             if(args.length == 1){

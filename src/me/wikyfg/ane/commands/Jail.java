@@ -21,6 +21,11 @@ public class Jail implements CommandExecutor {
         Player p = (Player) sender;
         if(cmd.getName().equalsIgnoreCase("jail")){
 
+            if (!p.isOp()){
+                p.sendMessage(ChatColor.RED + "Lo siento, no tienes permisos para hacer esto.");
+                return false;
+            }
+
             if(args.length == 0 || args.length > 1){
                 if(Files.userdata.get("alcalde").equals(p.getName()) || p.isOp()){
                     p.sendMessage(ChatColor.RED + "Para usar este comando haz /jail <nombre>");
