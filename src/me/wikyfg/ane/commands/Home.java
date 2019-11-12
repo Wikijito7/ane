@@ -36,9 +36,15 @@ public class Home implements CommandExecutor {
                 if(Files.userdata.contains(p.getName() + ".homes." + args[0].toLowerCase())){
                     Files.userdata.set(p.getName() + ".back", p.getLocation().getX() + "," + p.getLocation().getY() + "," + p.getLocation().getZ() + "," + p.getLocation().getWorld().getName());
                     String[] coord = Files.userdata.get(p.getName() + ".homes." + args[0]).toString().split(",");
-                    Location tp = new Location(Bukkit.getWorld(coord[3]), Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
-                    p.sendMessage(ChatColor.GREEN + "Teletransportándote a tu casa");
-                    p.teleport(tp);
+
+                    try{
+                        Location tp = new Location(Bukkit.getWorld(coord[3]), Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+                        p.sendMessage(ChatColor.GREEN + "Teletransportándote a tu casa");
+                        p.teleport(tp);
+                    }catch(IndexOutOfBoundsException e){
+                        p.sendMessage(ChatColor.RED + "Comprueba que esa casa exista, /homelist. (" + args[0] + ")");
+                    }
+
                 }else{
                     p.sendMessage(ChatColor.RED + "Amigo mío, no tienes ninguna punto puesto. Puedes ponerlo con /sethome.(Argumento usado: " + args[0] + ")");
                 }

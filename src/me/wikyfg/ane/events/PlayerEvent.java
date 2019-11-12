@@ -50,7 +50,7 @@ public class PlayerEvent implements Listener {
         String[] mensajes = {
                 "&c{player} ha salido, ¡por fin!",
                 "&c¡Se ha ido {player}! ¡Menos mal!",
-                "&c¿Quien ha invitado a {player}?",
+                "&c¿{player}?",
                 "&c{player} ha ido a defender la libertad de los presos políticos.",
                 "&cC fué {player}..",
                 "&c¡Adió {player}!",
@@ -76,7 +76,7 @@ public class PlayerEvent implements Listener {
             e.setFormat(ChatColor.DARK_RED + "[Jail] " + ChatColor.GRAY + e.getPlayer().getName() + ": "  + e.getMessage());
         }
         e.setFormat(ChatColor.translateAlternateColorCodes('&' , e.getFormat().replaceAll("<","").replaceAll(">", ":")));
-
+        e.setMessage(ChatColor.translateAlternateColorCodes('&', e.getMessage()));
     }
 
     @EventHandler
@@ -113,25 +113,28 @@ public class PlayerEvent implements Listener {
 
     @EventHandler
     public void onPlayerBedEnterEvent(PlayerBedEnterEvent e){
-        sleepingPlayers++;
-        Bukkit.broadcastMessage(ChatColor.GOLD + e.getPlayer().getName() + ChatColor.YELLOW + " ha entrado en la cama." + ChatColor.GOLD + " (" + sleepingPlayers + "/" +  Bukkit.getServer().getOnlinePlayers().size() + ")");
-        if(sleepingPlayers != 0 && sleepingPlayers >= Bukkit.getServer().getOnlinePlayers().size()/2 && Bukkit.getServer().getOnlinePlayers().size() > 1){
-            if (e.getPlayer().getWorld().getTime() > 12000){
+        if (e.getPlayer().getWorld().getTime() < 12000){
+            return;
+        }
 
-                return;
-            }
+        sleepingPlayers++;
+        Bukkit.broadcastMessage(ChatColor.GOLD + e.getPlayer().getName() + ChatColor.YELLOW + " ha entrado en la cama. " + ChatColor.GOLD + " (" + sleepingPlayers + "/" +  Bukkit.getServer().getOnlinePlayers().size() + ")");
+        System.out.println(sleepingPlayers >= Bukkit.getServer().getOnlinePlayers().size()/2);
+        if(sleepingPlayers != 0 && sleepingPlayers*10 >= ((Bukkit.getServer().getOnlinePlayers().size()*10)/2) && Bukkit.getServer().getOnlinePlayers().size() > 1){
             e.getPlayer().getWorld().setTime(1000);
             Bukkit.broadcastMessage(ChatColor.GOLD + "Se hizo de día, ¡a trabajar putos andaluces!");
             sleepingPlayers = 0;
         }
     }
+
     @EventHandler
     public void onPlayerBedLeaveEvent(PlayerBedLeaveEvent e){
         if(sleepingPlayers > 0){
             sleepingPlayers--;
-            Bukkit.broadcastMessage(ChatColor.GOLD + e.getPlayer().getName() + ChatColor.YELLOW +" se ha levantado." + ChatColor.GOLD + "(" + sleepingPlayers + "/" +  Bukkit.getServer().getOnlinePlayers().size() + ")");
+            Bukkit.broadcastMessage(ChatColor.GOLD + e.getPlayer().getName() + ChatColor.YELLOW +" se ha levantado. " + ChatColor.GOLD + "(" + sleepingPlayers + "/" +  Bukkit.getServer().getOnlinePlayers().size() + ")");
         }
     }
+
     @EventHandler
     public void onClick(PlayerInteractEvent e){
         Player p = e.getPlayer();
