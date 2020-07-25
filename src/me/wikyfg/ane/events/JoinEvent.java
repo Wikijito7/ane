@@ -19,11 +19,9 @@ public class JoinEvent implements Listener {
     public void onJoin(PlayerJoinEvent e){
         Player p = e.getPlayer();
         if(Files.userdata.get(p.getName()) == null){
-            Files.moneydata.set(p.getName(), 0);
             Files.userdata.set(p.getName() + ".homes.home", "none");
             Files.userdata.set(p.getName() + ".back", p.getLocation().getX() + "," + p.getLocation().getY() + "," + p.getLocation().getZ() + "," + p.getLocation().getWorld().getName());
             main.files.saveFiles();
-
         }
 
     }

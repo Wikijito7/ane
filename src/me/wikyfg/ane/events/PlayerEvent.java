@@ -5,6 +5,7 @@ import me.wikyfg.ane.api.ExperienceAPI;
 import me.wikyfg.ane.files.Files;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -19,7 +20,6 @@ import java.util.Random;
 public class PlayerEvent implements Listener {
 
     private ANEMain main;
-    private int sleepingPlayers = 0;
 
     public PlayerEvent(ANEMain main){
         this.main = main;
@@ -81,19 +81,27 @@ public class PlayerEvent implements Listener {
 
     @EventHandler
     public void onPlayerCommand(PlayerCommandPreprocessEvent e){
-        //if (e.getMessage().equalsIgnoreCase("/kill") && e.getPlayer().getName().startsWith("Leti")) e.setCancelled(true);
-
         Player p = e.getPlayer();
-        if(!Files.userdata.contains(p.getName() + ".jail")) {
+        if (!Files.userdata.contains(p.getName() + ".jail")) {
             Files.userdata.set(p.getName() + ".jail", "false");
             main.files.saveFiles();
         }
 
-
-        if(Files.userdata.get(p.getName() + ".jail").equals("true")){
+        if (Files.userdata.get(p.getName() + ".jail").equals("true")) {
             p.sendMessage(ChatColor.DARK_RED + "Estás encarcelado, piensa lo que hiciste e intentalo de nuevo más tarde.");
             e.setCancelled(true);
+            return;
         }
+
+        if (e.getMessage().startsWith("/day") || e.getMessage().startsWith("/jail") || e.getMessage().startsWith("/night") || e.getMessage().startsWith("/rain") || e.getMessage().startsWith("/sun") || e.getMessage().startsWith("/ane") || e.getMessage().startsWith("/setspawn") || e.getMessage().startsWith("/balance")) return;
+
+        if (p.getLevel() - 1 < 0) {
+            p.sendMessage(ChatColor.RED + "Necesitas al menos un nivel de experiencia para poder usar los comandos.");
+            e.setCancelled(true);
+            return;
+        }
+
+        if (p.getGameMode() != GameMode.CREATIVE) p.setLevel(p.getLevel() - 1);
     }
 
     @EventHandler
@@ -108,30 +116,6 @@ public class PlayerEvent implements Listener {
         if(Files.userdata.get(p.getName() + ".jail").equals("true")){
             p.sendMessage(ChatColor.DARK_RED + "Estás encarcelado, piensa lo que hiciste e intentalo de nuevo más tarde.");
             e.setCancelled(true);
-        }
-    }
-
-    @EventHandler
-    public void onPlayerBedEnterEvent(PlayerBedEnterEvent e){
-        if (e.getPlayer().getWorld().getTime() < 12000){
-            return;
-        }
-
-        sleepingPlayers++;
-        Bukkit.broadcastMessage(ChatColor.GOLD + e.getPlayer().getName() + ChatColor.YELLOW + " ha entrado en la cama. " + ChatColor.GOLD + " (" + sleepingPlayers + "/" +  Bukkit.getServer().getOnlinePlayers().size() + ")");
-        System.out.println(sleepingPlayers >= Bukkit.getServer().getOnlinePlayers().size()/2);
-        if(sleepingPlayers != 0 && sleepingPlayers*10 >= ((Bukkit.getServer().getOnlinePlayers().size()*10)/2) && Bukkit.getServer().getOnlinePlayers().size() > 1){
-            e.getPlayer().getWorld().setTime(1000);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "Se hizo de día, ¡a trabajar putos andaluces!");
-            sleepingPlayers = 0;
-        }
-    }
-
-    @EventHandler
-    public void onPlayerBedLeaveEvent(PlayerBedLeaveEvent e){
-        if(sleepingPlayers > 0){
-            sleepingPlayers--;
-            Bukkit.broadcastMessage(ChatColor.GOLD + e.getPlayer().getName() + ChatColor.YELLOW +" se ha levantado. " + ChatColor.GOLD + "(" + sleepingPlayers + "/" +  Bukkit.getServer().getOnlinePlayers().size() + ")");
         }
     }
 

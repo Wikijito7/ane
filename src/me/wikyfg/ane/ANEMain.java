@@ -4,34 +4,15 @@ import me.wikyfg.ane.events.DeathEvent;
 import me.wikyfg.ane.events.JoinEvent;
 import me.wikyfg.ane.events.PlayerEvent;
 import me.wikyfg.ane.files.Files;
-import me.wikyfg.ane.utils.Utils;
-import net.milkbowl.vault.economy.Economy;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.HashMap;
 
 public class ANEMain extends JavaPlugin {
     public Files files;
     private PluginManager plugin = this.getServer().getPluginManager();
-    public Economy eco;
 
     @Override
     public void onEnable() {
-
-        Plugin vault = getServer().getPluginManager().getPlugin( "Vault" );
-
-        if( vault == null )
-        {
-            return;
-        }
-
-        getServer().getServicesManager().register( Economy.class, new Utils( this ), this, ServicePriority.Highest );
-        eco = getServer().getServicesManager().getRegistration(Economy.class).getProvider();
-
         System.out.println("ANECommand has been enabled");
         files = new Files();
         loadEvents();
@@ -61,6 +42,7 @@ public class ANEMain extends JavaPlugin {
         getCommand("rain").setExecutor(new Rain(this));
         getCommand("sun").setExecutor(new Sun(this));
         getCommand("savexp").setExecutor(new Saveexp(this));
+        getCommand("setspawn").setExecutor(new Setspawn(this));
     }
 
     private void loadEvents(){

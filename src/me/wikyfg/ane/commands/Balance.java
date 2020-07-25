@@ -1,6 +1,7 @@
 package me.wikyfg.ane.commands;
 
 import me.wikyfg.ane.ANEMain;
+import me.wikyfg.ane.api.ExperienceAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,13 +14,14 @@ public class Balance implements CommandExecutor {
     public Balance(ANEMain main){
         this.main = main;
     }
-
+    private ExperienceAPI experienceAPI;
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
+        experienceAPI = new ExperienceAPI(p);
         if(cmd.getName().equalsIgnoreCase("balance") || cmd.getName().equalsIgnoreCase("money")){
             if(args.length == 0){
-                p.sendMessage(ChatColor.GREEN + "Tienes " + main.eco.getBalance(p) + " euros, pobre de mierda.");
+                p.sendMessage(ChatColor.GREEN + "Tienes " + experienceAPI.getCurrentExp() + " exp.");
             }else{
                 p.sendMessage(ChatColor.RED + "Illo colega tas pasao d'argumentoh. Prueba a poner /money o /balance.");
             }

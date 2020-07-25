@@ -26,7 +26,6 @@ public class DeathEvent implements Listener {
         String coords = p.getLocation().getX() + "," + p.getLocation().getY() + "," + p.getLocation().getZ() + "," + p.getLocation().getWorld().getName();
         Files.userdata.set(p.getName() + ".back", coords);
         main.files.saveFiles();
-        //ToDo: Hacer el /back si muere que cambie la ultima posición a esta.
     }
 
 }
