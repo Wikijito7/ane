@@ -43,6 +43,7 @@ public class ANEMain extends JavaPlugin {
         getCommand("sun").setExecutor(new Sun(this));
         getCommand("savexp").setExecutor(new Saveexp(this));
         getCommand("setspawn").setExecutor(new Setspawn(this));
+        getCommand("do").setExecutor(new Do(this));
     }
 
     private void loadEvents(){

@@ -15,6 +15,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class PlayerEvent implements Listener {
@@ -82,6 +83,7 @@ public class PlayerEvent implements Listener {
     @EventHandler
     public void onPlayerCommand(PlayerCommandPreprocessEvent e){
         Player p = e.getPlayer();
+        String[] commands = new String[]{"/back", "/home", "/pagar", "/savexp", "/sethome", "/spawn"};
         if (!Files.userdata.contains(p.getName() + ".jail")) {
             Files.userdata.set(p.getName() + ".jail", "false");
             main.files.saveFiles();
@@ -93,7 +95,7 @@ public class PlayerEvent implements Listener {
             return;
         }
 
-        if (e.getMessage().startsWith("/day") || e.getMessage().startsWith("/jail") || e.getMessage().startsWith("/night") || e.getMessage().startsWith("/rain") || e.getMessage().startsWith("/sun") || e.getMessage().startsWith("/ane") || e.getMessage().startsWith("/setspawn") || e.getMessage().startsWith("/balance")) return;
+        if (p.getGameMode() == GameMode.CREATIVE || !Arrays.asList(commands).contains(e.getMessage().split(" ")[0])) return;
 
         if (p.getLevel() - 1 < 0) {
             p.sendMessage(ChatColor.RED + "Necesitas al menos un nivel de experiencia para poder usar los comandos.");
@@ -101,7 +103,7 @@ public class PlayerEvent implements Listener {
             return;
         }
 
-        if (p.getGameMode() != GameMode.CREATIVE) p.setLevel(p.getLevel() - 1);
+        p.setLevel(p.getLevel() - 1);
     }
 
     @EventHandler

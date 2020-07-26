@@ -21,7 +21,7 @@ public class Balance implements CommandExecutor {
         experienceAPI = new ExperienceAPI(p);
         if(cmd.getName().equalsIgnoreCase("balance") || cmd.getName().equalsIgnoreCase("money")){
             if(args.length == 0){
-                p.sendMessage(ChatColor.GREEN + "Tienes " + experienceAPI.getCurrentExp() + " exp.");
+                p.sendMessage(ChatColor.GREEN + "Tienes " + ChatColor.GOLD + experienceAPI.getCurrentExp() + ChatColor.GREEN +" exp.");
             }else{
                 p.sendMessage(ChatColor.RED + "Illo colega tas pasao d'argumentoh. Prueba a poner /money o /balance.");
             }

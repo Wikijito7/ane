@@ -42,3 +42,8 @@ commands:
     default: op
   savexp:
     description: Guarda la experiencia.
+  setspawn:
+    description: Cambia el punto de spawn del servidor.
+    default: op
+  do:
+    description: Hace una acción en tercera persona.
