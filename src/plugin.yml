@@ -47,3 +47,7 @@ commands:
     default: op
   do:
     description: Hace una acción en tercera persona.
+  me:
+    description: Hace una acción en primera persona.
+  entorno:
+    description: Describe en tercera persona una acción ilegal.
