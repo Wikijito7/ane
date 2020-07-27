@@ -24,7 +24,7 @@ public class Do implements CommandExecutor {
             Bukkit.broadcastMessage(ChatColor.YELLOW + "* " + p.getName() + " " + String.join(" ", args));
             return false;
         } else {
-            p.sendMessage(ChatColor.RED + "Creo que te has confundido, prueba con /do <mensaje>");
+            p.sendMessage(ChatColor.RED + "Creo que te has confundido, prueba con /do <mensaje>.");
             return false;
         }
     }
