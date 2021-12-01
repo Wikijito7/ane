@@ -9,24 +9,29 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Spawn implements CommandExecutor {
-    ANEMain main;
-    public Spawn(ANEMain main){
+    private final ANEMain main;
+
+    public Spawn(ANEMain main) {
         this.main = main;
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
-        if(cmd.getName().equalsIgnoreCase("spawn")){
-            if(args.length == 0){
+        if (cmd.getName().equalsIgnoreCase("spawn")) {
+            if (args.length == 0) {
                 p.sendMessage(ChatColor.GREEN + "Enviandote al spawn.");
                 Files.userdata.set(p.getName() + ".back", p.getLocation().getX() + "," + p.getLocation().getY() + "," + p.getLocation().getZ() + "," + p.getLocation().getWorld().getName());
-                main.files.saveFiles();
+                if (main.files != null) {
+                    main.files.saveFiles();
+                }
                 p.teleport(p.getLocation().getWorld().getSpawnLocation());
-            }else{
+
+            } else {
                 p.sendMessage(ChatColor.RED + "Has puesto demasiados argumentos, prueba a poner sólo /spawn.");
             }
 
         }
-        return false;
+        return true;
     }
 }

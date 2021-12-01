@@ -1,32 +1,24 @@
-package me.wikyfg.ane.commands;
+package me.wikyfg.ane.commands
 
-import me.wikyfg.ane.ANEMain;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.Bukkit
+import org.bukkit.ChatColor
+import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
-public class Entorno implements CommandExecutor {
+class Entorno : CommandExecutor {
+    override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<String>): Boolean {
+        val p = sender as? Player
+        if (args.isNotEmpty()) {
+            Bukkit.broadcastMessage("${ChatColor.GOLD}[ENTORNO] ${args.joinToString(separator = " ")}")
 
-    private ANEMain main;
-
-    public Entorno(ANEMain main) {
-        this.main = main;
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        Player p = (Player) sender;
-
-        if (args.length > 0){
-            Bukkit.broadcastMessage(ChatColor.GOLD + "[ENTORNO] " + String.join(" ", args));
-            return false;
         } else {
-            p.sendMessage(ChatColor.RED + "Creo que te has confundido, prueba con /entorno <mensaje>.");
-            return false;
+            p?.let {
+                p.sendMessage("${ChatColor.RED}Creo que te has confundido, prueba con /entorno <mensaje>.")
+            }
         }
-    }
 
+        return true
+    }
 }

@@ -17,6 +17,6 @@ public class HomeList implements CommandExecutor {
             Set<String> homes = Files.userdata.getConfigurationSection(p.getName() + ".homes").getKeys(false);
             p.sendMessage(ChatColor.GOLD + "Tus casas son las siguientes: " + ChatColor.GREEN + homes.toString().replaceAll("]", "").replaceAll("\\[", ""));
         }
-        return false;
+        return true;
     }
 }

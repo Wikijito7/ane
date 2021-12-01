@@ -16,21 +16,16 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
 public class Saveexp implements CommandExecutor {
-
-    private ANEMain main;
-
-    public Saveexp(ANEMain main) {
-        this.main = main;
-    }
     private ItemStack item = new ItemStack(Material.PAPER);
     private ExperienceAPI experienceAPI;
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
         experienceAPI = new ExperienceAPI(p);
         if (args.length != 1) {
             p.sendMessage(ChatColor.RED + "Te has confundido de argumentos, prueba a poner /saveexp <quantity>/all.");
-            return false;
+            return true;
         }
 
         if (args[0].equalsIgnoreCase("all")){
@@ -41,13 +36,13 @@ public class Saveexp implements CommandExecutor {
             item.setItemMeta(itemMeta);
             p.getInventory().addItem(item);
             experienceAPI.setExp(0);
-            return false;
+            return true;
         }
 
         if (Numeric.isNumeric(args[0])){
             if (!experienceAPI.hasExp(Integer.parseInt(args[0]))){
                 p.sendMessage(ChatColor.RED + "No tienes tanta experiencia (" + experienceAPI.getCurrentExp() + ")");
-                return false;
+                return true;
             }
             item.setAmount(1);
             item.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
@@ -60,6 +55,6 @@ public class Saveexp implements CommandExecutor {
         } else {
             p.sendMessage(ChatColor.RED + "Tienes que añadir un valor numérico.");
         }
-        return false;
+        return true;
     }
 }

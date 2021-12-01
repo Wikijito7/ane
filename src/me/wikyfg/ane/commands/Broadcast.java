@@ -22,11 +22,11 @@ public class Broadcast implements CommandExecutor {
 
         if (args.length > 0){
             Bukkit.broadcastMessage(ChatColor.GOLD + "[ANUNCIO] " + ChatColor.translateAlternateColorCodes('&', String.join(" ", args)));
-            return false;
         } else {
             p.sendMessage(ChatColor.RED + "Creo que te has confundido, prueba con /broadcast <mensaje>.");
-            return false;
         }
+
+        return true;
     }
 
 }

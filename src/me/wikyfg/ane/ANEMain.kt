@@ -1,56 +1,65 @@
-package me.wikyfg.ane;
-import me.wikyfg.ane.commands.*;
-import me.wikyfg.ane.events.DeathEvent;
-import me.wikyfg.ane.events.JoinEvent;
-import me.wikyfg.ane.events.PlayerEvent;
-import me.wikyfg.ane.files.Files;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
+package me.wikyfg.ane
 
-public class ANEMain extends JavaPlugin {
-    public Files files;
-    private PluginManager plugin = this.getServer().getPluginManager();
+import me.wikyfg.ane.commands.*
+import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.plugin.PluginManager
+import me.wikyfg.ane.events.JoinEvent
+import me.wikyfg.ane.events.DeathEvent
+import me.wikyfg.ane.events.PlayerEvent
+import me.wikyfg.ane.files.Files
 
-    @Override
-    public void onEnable() {
-        System.out.println("ANECommand has been enabled");
-        files = new Files();
-        loadEvents();
-        files.setupFiles();
-        files.saveFiles();
-        loadCommands();
+class ANEMain : JavaPlugin() {
+    @JvmField
+    var files: Files? = null
+    private val plugin = server.pluginManager
+    override fun onEnable() {
+        logger.info("Absolutely Not Essentials has been enabled")
+        loadEvents()
+        loadCommands()
+        setupFiles()
     }
 
-    public void onDisable(){
-        System.out.println("ANECommand has been disabled");
-        files.saveFiles();
+    private fun setupFiles() {
+        files = Files()
+        files?.apply {
+            setupFiles()
+            saveFiles()
+        }
     }
 
-    private void loadCommands(){
-        getCommand("tp").setExecutor(new Teleport(this));
-        getCommand("ANE").setExecutor(new ANECommand(this));
-        getCommand("back").setExecutor(new Back());
-        getCommand("home").setExecutor(new Home(this));
-        getCommand("sethome").setExecutor(new Sethome(this));
-        getCommand("spawn").setExecutor(new Spawn(this));
-        getCommand("homelist").setExecutor(new HomeList());
-        getCommand("pagar").setExecutor(new PayCMD(this));
-        getCommand("balance").setExecutor(new Balance(this));
-        getCommand("jail").setExecutor(new Jail(this));
-        getCommand("day").setExecutor(new Day(this));
-        getCommand("night").setExecutor(new Night(this));
-        getCommand("rain").setExecutor(new Rain(this));
-        getCommand("sun").setExecutor(new Sun(this));
-        getCommand("savexp").setExecutor(new Saveexp(this));
-        getCommand("setspawn").setExecutor(new Setspawn(this));
-        getCommand("do").setExecutor(new Do(this));
-        getCommand("me").setExecutor(new Me(this));
-        getCommand("entorno").setExecutor(new Entorno(this));
+    override fun onDisable() {
+        logger.info("Absolutely Not Essentials has been disabled")
+        files?.saveFiles()
     }
 
-    private void loadEvents(){
-        plugin.registerEvents(new JoinEvent(this), this);
-        plugin.registerEvents(new DeathEvent(this), this);
-        plugin.registerEvents(new PlayerEvent(this), this);
+    private fun loadCommands() {
+        getCommand("tp")?.setExecutor(Teleport(this))
+        getCommand("ANE")?.setExecutor(ANECommand())
+        getCommand("back")?.setExecutor(Back())
+        getCommand("home")?.setExecutor(Home(this))
+        getCommand("sethome")?.setExecutor(Sethome(this))
+        getCommand("spawn")?.setExecutor(Spawn(this))
+        getCommand("homelist")?.setExecutor(HomeList())
+        getCommand("pagar")?.setExecutor(PayCMD(this))
+        getCommand("balance")?.setExecutor(Balance())
+        getCommand("jail")?.setExecutor(Jail(this))
+        getCommand("day")?.setExecutor(Day())
+        getCommand("night")?.setExecutor(Night())
+        getCommand("rain")?.setExecutor(Rain())
+        getCommand("sun")?.setExecutor(Sun())
+        getCommand("savexp")?.setExecutor(Saveexp())
+        getCommand("setspawn")?.setExecutor(Setspawn())
+        getCommand("do")?.setExecutor(Do())
+        getCommand("me")?.setExecutor(Me())
+        getCommand("entorno")?.setExecutor(Entorno())
+    }
+
+    private fun loadEvents() {
+        plugin.apply {
+            val aneMain = this@ANEMain
+            registerEvents(JoinEvent(aneMain), aneMain)
+            registerEvents(DeathEvent(aneMain), aneMain)
+            registerEvents(PlayerEvent(aneMain), aneMain)
+        }
     }
 }

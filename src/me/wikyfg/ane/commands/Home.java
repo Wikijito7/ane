@@ -54,6 +54,6 @@ public class Home implements CommandExecutor {
                 p.sendMessage(ChatColor.RED + "Tas pasao de argumentos, prueba a poner /home ó /home <nombre>.");
             }
         }
-        return false;
+        return true;
     }
 }

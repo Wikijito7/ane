@@ -10,8 +10,8 @@ public class Files {
     public static File user = new File("plugins/ANE/", "userdata.yml");
     public static YamlConfiguration userdata = YamlConfiguration.loadConfiguration(user);
 
-    public void setupFiles(){
-        if(!user.exists()){
+    public void setupFiles() {
+        if (!user.exists()) {
             user.mkdir();
             userdata.set("motd.message", "&3Bienvenido de nuevo al servidor &6%PLAYER%");
             userdata.createSection("Users");

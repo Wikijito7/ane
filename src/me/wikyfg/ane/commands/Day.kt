@@ -1,35 +1,26 @@
-package me.wikyfg.ane.commands;
+package me.wikyfg.ane.commands
 
-import me.wikyfg.ane.ANEMain;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.ChatColor
+import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
-public class Day implements CommandExecutor {
-
-    private ANEMain main;
-
-    public Day(ANEMain main) {
-        this.main = main;
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        Player p = (Player) sender;
-        if (!p.isOp()){
-            p.sendMessage(ChatColor.RED + "Lo siento, no tienes permisos para hacer esto.");
-            return false;
+class Day : CommandExecutor {
+    override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<String>): Boolean {
+        val p = sender as? Player
+        p?.apply {
+            if (!isOp) {
+                sendMessage("${ChatColor.RED}Lo siento, no tienes permisos para hacer esto.")
+                return true
+            }
+            if (args.isNotEmpty()) {
+                sendMessage("${ChatColor.RED}Te has confundido de argumentos, prueba a poner /day.")
+                return true
+            }
+            sendMessage("${ChatColor.GOLD}Tiempo cambiado a de día.")
+            world.time = 1000
         }
-
-        if (args.length > 0){
-            p.sendMessage(ChatColor.RED + "Te has confundido de argumentos, prueba a poner /day.");
-            return false;
-        }
-        p.sendMessage(ChatColor.GOLD + "Tiempo cambiado a de día.");
-        p.getWorld().setTime(1000);
-        return false;
+        return true
     }
-
 }

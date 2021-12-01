@@ -1,36 +1,26 @@
-package me.wikyfg.ane.commands;
+package me.wikyfg.ane.commands
 
-import me.wikyfg.ane.ANEMain;
-import me.wikyfg.ane.files.Files;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.ChatColor
+import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
-public class Setspawn implements CommandExecutor {
-
-    private ANEMain main;
-
-    public Setspawn(ANEMain main) {
-        this.main = main;
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-
-        Player p = (Player) sender;
-        if (!p.isOp()) {
-            p.sendMessage(ChatColor.RED + "Lo siento, no tienes permisos para hacer esto.");
-            return false;
+class Setspawn : CommandExecutor {
+    override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<String>): Boolean {
+        val p = sender as? Player
+        p?.apply {
+            if (!isOp) {
+                sendMessage("${ChatColor.RED}Lo siento, no tienes permisos para hacer esto.")
+                return true
+            }
+            if (args.isNotEmpty()) {
+                sendMessage("${ChatColor.RED}Te has confundido de argumentos, prueba a poner /setspawn.")
+                return true
+            }
+            sendMessage("${ChatColor.GREEN}Has cambiado el spawn correctamente.")
+            world.spawnLocation = location
         }
-
-        if (args.length > 0) {
-            p.sendMessage(ChatColor.RED + "Te has confundido de argumentos, prueba a poner /rain.");
-            return false;
-        }
-        p.sendMessage(ChatColor.GREEN + "Has cambiado el spawn correctamente.");
-        p.getWorld().setSpawnLocation(p.getLocation());
-        return false;
+        return true
     }
 }

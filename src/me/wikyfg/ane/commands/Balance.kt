@@ -1,31 +1,30 @@
-package me.wikyfg.ane.commands;
+package me.wikyfg.ane.commands
 
-import me.wikyfg.ane.ANEMain;
-import me.wikyfg.ane.api.ExperienceAPI;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import me.wikyfg.ane.api.ExperienceAPI
+import org.bukkit.ChatColor
+import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
-public class Balance implements CommandExecutor {
+class Balance : CommandExecutor {
+    private var experienceAPI: ExperienceAPI? = null
+    override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<String>): Boolean {
+        val p = sender as? Player
+        if (cmd.name.equals("balance", ignoreCase = true) ||
+            cmd.name.equals("money", ignoreCase = true)
+        ) {
+            p?.apply {
+                experienceAPI = ExperienceAPI(p)
+                if (args.isEmpty()) {
+                    sendMessage("${ChatColor.GREEN}Tienes ${ChatColor.GOLD}${experienceAPI?.currentExp} ${ChatColor.GREEN}exp.")
 
-    private ANEMain main;
-    public Balance(ANEMain main){
-        this.main = main;
-    }
-    private ExperienceAPI experienceAPI;
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        Player p = (Player) sender;
-        experienceAPI = new ExperienceAPI(p);
-        if(cmd.getName().equalsIgnoreCase("balance") || cmd.getName().equalsIgnoreCase("money")){
-            if(args.length == 0){
-                p.sendMessage(ChatColor.GREEN + "Tienes " + ChatColor.GOLD + experienceAPI.getCurrentExp() + ChatColor.GREEN +" exp.");
-            }else{
-                p.sendMessage(ChatColor.RED + "Illo colega tas pasao d'argumentoh. Prueba a poner /money o /balance.");
+                } else {
+                    sendMessage("${ChatColor.RED}Illo colega tas pasao d'argumentoh. Prueba a poner /money o /balance.")
+                }
             }
         }
-        return false;
+
+        return true
     }
 }

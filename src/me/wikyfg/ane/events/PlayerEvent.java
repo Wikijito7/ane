@@ -22,12 +22,12 @@ public class PlayerEvent implements Listener {
 
     private ANEMain main;
 
-    public PlayerEvent(ANEMain main){
+    public PlayerEvent(ANEMain main) {
         this.main = main;
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e){
+    public void onJoin(PlayerJoinEvent e) {
         String[] mensajes = {
                 "&a{player} ha entrado, ¡corred!",
                 "&aVaya.. quien faltaba.. {player} ha entrado..",
@@ -43,11 +43,11 @@ public class PlayerEvent implements Listener {
                 "&aGuardad todo lo divertido, ha entrado {player}.",
                 "&bEeeeeh, zizi, &avenga entra {player}."
         };
-        e.setJoinMessage(ChatColor.translateAlternateColorCodes('&',mensajes[new Random().nextInt(mensajes.length)].replace("{player}", e.getPlayer().getName())));
+        e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', mensajes[new Random().nextInt(mensajes.length)].replace("{player}", e.getPlayer().getName())));
     }
 
     @EventHandler
-    public void onLeave(PlayerQuitEvent e){
+    public void onLeave(PlayerQuitEvent e) {
         String[] mensajes = {
                 "&c{player} ha salido, ¡por fin!",
                 "&c¡Se ha ido {player}! ¡Menos mal!",
@@ -63,25 +63,25 @@ public class PlayerEvent implements Listener {
                 "&cSacad todo lo divertido de nuevo, sa ido {player}.",
                 "&bEeeeeh, zizi, &cvenga taluego {player}."
         };
-        e.setQuitMessage(ChatColor.translateAlternateColorCodes('&',mensajes[new Random().nextInt(mensajes.length)].replace("{player}", e.getPlayer().getName())));
+        e.setQuitMessage(ChatColor.translateAlternateColorCodes('&', mensajes[new Random().nextInt(mensajes.length)].replace("{player}", e.getPlayer().getName())));
     }
 
     @EventHandler
-    public void onChat(AsyncPlayerChatEvent e){
+    public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
-        if(!Files.userdata.contains(p.getName() + ".jail")) {
+        if (!Files.userdata.contains(p.getName() + ".jail")) {
             Files.userdata.set(p.getName() + ".jail", "false");
             main.files.saveFiles();
         }
-        if(Files.userdata.get(p.getName() + ".jail").equals("true")){
-            e.setFormat(ChatColor.DARK_RED + "[Jail] " + ChatColor.GRAY + e.getPlayer().getName() + ": "  + e.getMessage());
+        if (Files.userdata.get(p.getName() + ".jail").equals("true")) {
+            e.setFormat(ChatColor.DARK_RED + "[Jail] " + ChatColor.GRAY + e.getPlayer().getName() + ": " + e.getMessage());
         }
-        e.setFormat(ChatColor.translateAlternateColorCodes('&' , e.getFormat().replaceAll("<","").replaceAll(">", ":")));
+        e.setFormat(ChatColor.translateAlternateColorCodes('&', e.getFormat().replaceAll("<", "").replaceAll(">", ":")));
         e.setMessage(ChatColor.translateAlternateColorCodes('&', e.getMessage()));
     }
 
     @EventHandler
-    public void onPlayerCommand(PlayerCommandPreprocessEvent e){
+    public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
         Player p = e.getPlayer();
         String[] commands = new String[]{"/back", "/home", "/pagar", "/savexp", "/sethome", "/spawn"};
         if (!Files.userdata.contains(p.getName() + ".jail")) {
@@ -95,7 +95,10 @@ public class PlayerEvent implements Listener {
             return;
         }
 
-        if (p.getGameMode() == GameMode.CREATIVE || !Arrays.asList(commands).contains(e.getMessage().split(" ")[0])) return;
+        if (p.getGameMode() == GameMode.CREATIVE ||
+                !Arrays.asList(commands).contains(e.getMessage().split(" ")[0])) {
+            return;
+        }
 
         if (p.getLevel() - 1 < 0) {
             p.sendMessage(ChatColor.RED + "Necesitas al menos un nivel de experiencia para poder usar los comandos.");
@@ -107,26 +110,26 @@ public class PlayerEvent implements Listener {
     }
 
     @EventHandler
-    public void onPlayerBreak(BlockBreakEvent e){
+    public void onPlayerBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
-        if(!Files.userdata.contains(p.getName() + ".jail")){
+        if (!Files.userdata.contains(p.getName() + ".jail")) {
             Files.userdata.set(p.getName() + ".jail", "false");
             main.files.saveFiles();
         }
 
 
-        if(Files.userdata.get(p.getName() + ".jail").equals("true")){
+        if (Files.userdata.get(p.getName() + ".jail").equals("true")) {
             p.sendMessage(ChatColor.DARK_RED + "Estás encarcelado, piensa lo que hiciste e intentalo de nuevo más tarde.");
             e.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onClick(PlayerInteractEvent e){
+    public void onClick(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         ItemStack item = new ItemStack(Material.PAPER);
         ExperienceAPI experienceAPI = new ExperienceAPI(p);
-        if(p.getInventory().getItemInMainHand().getType() == Material.PAPER) {
+        if (p.getInventory().getItemInMainHand().getType() == Material.PAPER) {
             String name = p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().split(" ")[0];
             experienceAPI.changeExp(Integer.parseInt(name));
             p.getInventory().remove(p.getInventory().getItemInMainHand());
