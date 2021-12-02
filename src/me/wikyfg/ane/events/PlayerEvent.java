@@ -20,7 +20,7 @@ import java.util.Random;
 
 public class PlayerEvent implements Listener {
 
-    private ANEMain main;
+    private final ANEMain main;
 
     public PlayerEvent(ANEMain main) {
         this.main = main;
@@ -116,7 +116,6 @@ public class PlayerEvent implements Listener {
             Files.userdata.set(p.getName() + ".jail", "false");
             main.files.saveFiles();
         }
-
 
         if (Files.userdata.get(p.getName() + ".jail").equals("true")) {
             p.sendMessage(ChatColor.DARK_RED + "Estás encarcelado, piensa lo que hiciste e intentalo de nuevo más tarde.");

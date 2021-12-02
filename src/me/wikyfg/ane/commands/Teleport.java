@@ -36,7 +36,7 @@ public class Teleport implements CommandExecutor {
             if (args.length == 1) {
                 Player pl = Bukkit.getPlayer(args[0]);
                 if (pl != null) {
-                    setBack(p, pl, p);
+                    teleport(p, pl, p);
                     pl.sendMessage(ChatColor.GRAY + p.getName() + " se ha teletransportado a tu localización.");
                     p.sendMessage(ChatColor.GRAY + "Teletransportandote a localización de " + pl.getName() + ".");
                 } else {
@@ -48,10 +48,12 @@ public class Teleport implements CommandExecutor {
             if (args.length == 2) {
                 Player pl1 = Bukkit.getPlayer(args[0]);
                 Player pl2 = Bukkit.getPlayer(args[1]);
-                if (pl1 != null && pl2 != null) {
-                    setBack(p, pl1, pl2);
-                    pl1.sendMessage(ChatColor.GRAY + "Teletransportado " + pl2.getName() + " a tu localización.");
-                    pl2.sendMessage(ChatColor.GRAY + "Has sido teletransportado a la localización de" + pl1.getName() + ".");
+                if (pl1 != null &&
+                        pl2 != null) {
+                    teleport(pl1, pl2, pl1);
+                    pl1.sendMessage(ChatColor.GRAY + "Has sido teletransportado a la localización de " + pl2.getName() + ".");
+                    pl2.sendMessage(ChatColor.GRAY + "Teletransportado " + pl1.getName() + " a tu localización.");
+
                 } else {
                     p.sendMessage(ChatColor.RED + "Ese usuario no existe o está desconectado.");
                 }
@@ -66,9 +68,9 @@ public class Teleport implements CommandExecutor {
 
                 Location tp = new Location(p.getWorld(), Double.parseDouble(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]));
                 Files.userdata.set(p.getName() + ".back", p.getLocation().getX() + "," + p.getLocation().getY() + "," + p.getLocation().getZ() + "," + p.getLocation().getWorld().getName());
-                if (main.files != null){
-                                main.files.saveFiles();
-                            }
+                if (main.files != null) {
+                    main.files.saveFiles();
+                }
                 p.teleport(tp);
                 p.sendMessage(ChatColor.GRAY + "Has sido teletransportado a " + Double.parseDouble(args[0]) + " " + Double.parseDouble(args[1]) + " " + Double.parseDouble(args[2]) + " en el mundo" + p.getWorld());
             }
@@ -77,11 +79,11 @@ public class Teleport implements CommandExecutor {
         return true;
     }
 
-    private void setBack(Player p, Player pl1, Player pl2) {
+    private void teleport(Player p, Player playerTo, Player playerTeleported) {
         Files.userdata.set(p.getName() + ".back", p.getLocation().getX() + "," + p.getLocation().getY() + "," + p.getLocation().getZ() + "," + p.getLocation().getWorld().getName());
-        if (main.files != null){
-                    main.files.saveFiles();
-                }
-        pl2.teleport(pl1.getLocation());
+        if (main.files != null) {
+            main.files.saveFiles();
+        }
+        playerTeleported.teleport(playerTo.getLocation());
     }
 }

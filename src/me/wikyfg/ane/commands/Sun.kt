@@ -18,9 +18,11 @@ class Sun : CommandExecutor {
                 sendMessage("${ChatColor.RED}Te has confundido de argumentos, prueba a poner /sun.")
                 return true
             }
-            world.setStorm(true)
             sendMessage("${ChatColor.GOLD}Clima cambiado a soleado.")
-            world.weatherDuration = 20000
+            world.apply {
+                setStorm(false)
+                weatherDuration = 20000
+            }
         }
         return true
     }
