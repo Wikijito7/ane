@@ -8,11 +8,11 @@ import org.bukkit.entity.Player
 
 class ANECommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<String>): Boolean {
-        val p = sender as Player
+        val p = sender as? Player
         if (cmd.name.equals("ane", ignoreCase = true)) {
-            p.apply {
+            p?.apply {
                 sendMessage("${ChatColor.GREEN}Bienvenido a la página de ayuda de Absolutly Not Essentials.")
-                sendMessage("${ChatColor.GREEN}Desarrollado por ${ChatColor.GOLD}Woki.")
+                sendMessage("${ChatColor.GREEN}Desarrollado por ${ChatColor.GOLD}Wikijito7.")
                 sendMessage("")
                 sendMessage("${ChatColor.GOLD}/spawn: ${ChatColor.GREEN}Te envia al spawn del mundo. ${ChatColor.RED}¡Cuesta un nivel de experiencia usarlo!")
                 sendMessage("${ChatColor.GOLD}/home (<nombre>): ${ChatColor.GREEN}Te envia al lugar que hayas seleccionado como casa. ${ChatColor.RED}¡Cuesta un nivel de experiencia usarlo!")

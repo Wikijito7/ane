@@ -28,7 +28,8 @@ public class Teleport implements CommandExecutor {
             return true;
         }
 
-        if (cmd.getName().equalsIgnoreCase("tp") || cmd.getName().equalsIgnoreCase("teleport")) {
+        if (cmd.getName().equalsIgnoreCase("tp") ||
+                cmd.getName().equalsIgnoreCase("teleport")) {
             if (args.length == 0) {
                 p.sendMessage(ChatColor.RED + "Illo, creo que te faltan argumentos. /tp <nombre>, /tp <nombre> <nombre> ó /tp <x> <y> <z>");
             }
@@ -61,7 +62,8 @@ public class Teleport implements CommandExecutor {
             }
 
             if (args.length == 3) {
-                if (!Numeric.isNumeric(args[0]) && !Numeric.isNumeric(args[1]) && !Numeric.isNumeric(args[2])) {
+                if (!Numeric.isNumeric(args[0]) && !Numeric.isNumeric(args[1]) &&
+                        !Numeric.isNumeric(args[2])) {
                     p.sendMessage(ChatColor.RED + "Los valores introducidos no son números.");
                     return true;
                 }

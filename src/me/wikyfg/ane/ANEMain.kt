@@ -1,6 +1,7 @@
 package me.wikyfg.ane
 
 import me.wikyfg.ane.commands.*
+import me.wikyfg.ane.events.ClickEvent
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.plugin.PluginManager
 import me.wikyfg.ane.events.JoinEvent
@@ -60,6 +61,7 @@ class ANEMain : JavaPlugin() {
             registerEvents(JoinEvent(aneMain), aneMain)
             registerEvents(DeathEvent(aneMain), aneMain)
             registerEvents(PlayerEvent(aneMain), aneMain)
+            registerEvents(ClickEvent(), aneMain)
         }
     }
 }

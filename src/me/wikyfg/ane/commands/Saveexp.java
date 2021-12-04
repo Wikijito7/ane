@@ -15,8 +15,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
+import java.util.Collections;
+
 public class Saveexp implements CommandExecutor {
-    private ItemStack item = new ItemStack(Material.PAPER);
     private ExperienceAPI experienceAPI;
 
     @Override
@@ -29,32 +30,32 @@ public class Saveexp implements CommandExecutor {
         }
 
         if (args[0].equalsIgnoreCase("all")){
-            item.setAmount(1);
-            item.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-            ItemMeta itemMeta = item.getItemMeta();
-            itemMeta.setDisplayName(experienceAPI.getCurrentExp() + " xp");
-            item.setItemMeta(itemMeta);
-            p.getInventory().addItem(item);
-            experienceAPI.setExp(0);
+            generateExpPaper(p, experienceAPI.getCurrentExp());
             return true;
         }
 
         if (Numeric.isNumeric(args[0])){
             if (!experienceAPI.hasExp(Integer.parseInt(args[0]))){
                 p.sendMessage(ChatColor.RED + "No tienes tanta experiencia (" + experienceAPI.getCurrentExp() + ")");
-                return true;
+                return false;
             }
-            item.setAmount(1);
-            item.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-            ItemMeta itemMeta = item.getItemMeta();
-            itemMeta.setDisplayName(Integer.parseInt(args[0])  + " xp");
-            item.setItemMeta(itemMeta);
-            p.getInventory().addItem(item);
-            System.out.println(experienceAPI.getCurrentExp() + " " + Integer.parseInt(args[0]) + " " + (experienceAPI.getCurrentExp() - Integer.parseInt(args[0])));
-            experienceAPI.setExp(experienceAPI.getCurrentExp() - Integer.parseInt(args[0]));
+            generateExpPaper(p, Integer.parseInt(args[0]));
+
         } else {
             p.sendMessage(ChatColor.RED + "Tienes que añadir un valor numérico.");
         }
         return true;
+    }
+
+    private void generateExpPaper(Player p, int exp) {
+        final ItemStack item = new ItemStack(Material.PAPER);
+        item.setAmount(1);
+        item.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 5);
+        ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.setDisplayName("Vale de experiencia por " + exp + " exp");
+        itemMeta.setLore(Collections.singletonList(exp + " exp"));
+        item.setItemMeta(itemMeta);
+        p.getInventory().addItem(item);
+        experienceAPI.setExp(experienceAPI.getCurrentExp() - exp);
     }
 }

@@ -28,7 +28,7 @@ public class Jail implements CommandExecutor {
             }
 
             if (args.length != 1) {
-                if (Files.userdata.get("alcalde").equals(p.getName()) || p.isOp()) {
+                if (p.isOp()) {
                     p.sendMessage(ChatColor.RED + "Para usar este comando haz /jail <nombre>");
                 } else {
                     p.sendMessage(ChatColor.MAGIC + "??????");
@@ -36,7 +36,7 @@ public class Jail implements CommandExecutor {
             }
 
             if (args.length == 1) {
-                if (Files.userdata.get("alcalde").equals(p.getName()) || p.isOp()) {
+                if (p.isOp()) {
                     Player pl = Bukkit.getPlayer(args[0]);
                     if (pl != null || Files.userdata.contains(args[0])) {
                         if (Files.userdata.get(args[0] + ".jail").equals("true")) {

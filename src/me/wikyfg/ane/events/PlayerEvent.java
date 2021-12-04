@@ -76,7 +76,10 @@ public class PlayerEvent implements Listener {
         if (Files.userdata.get(p.getName() + ".jail").equals("true")) {
             e.setFormat(ChatColor.DARK_RED + "[Jail] " + ChatColor.GRAY + e.getPlayer().getName() + ": " + e.getMessage());
         }
-        e.setFormat(ChatColor.translateAlternateColorCodes('&', e.getFormat().replaceAll("<", "").replaceAll(">", ":")));
+        String opPrefix = "[" + ChatColor.RED + "OP" + ChatColor.RESET + "] ";
+        String userPrefix = "[" + ChatColor.YELLOW + "U" + ChatColor.RESET + "] ";
+        String prefix = p.isOp() ? opPrefix : userPrefix;
+        e.setFormat(ChatColor.translateAlternateColorCodes('&', e.getFormat().replaceAll("<", prefix).replaceAll(">", ":")));
         e.setMessage(ChatColor.translateAlternateColorCodes('&', e.getMessage()));
     }
 
@@ -123,16 +126,6 @@ public class PlayerEvent implements Listener {
         }
     }
 
-    @EventHandler
-    public void onClick(PlayerInteractEvent e) {
-        Player p = e.getPlayer();
-        ItemStack item = new ItemStack(Material.PAPER);
-        ExperienceAPI experienceAPI = new ExperienceAPI(p);
-        if (p.getInventory().getItemInMainHand().getType() == Material.PAPER) {
-            String name = p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().split(" ")[0];
-            experienceAPI.changeExp(Integer.parseInt(name));
-            p.getInventory().remove(p.getInventory().getItemInMainHand());
-        }
-    }
+
 
 }
