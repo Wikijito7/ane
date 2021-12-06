@@ -86,7 +86,6 @@ public class PlayerEvent implements Listener {
     @EventHandler
     public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
         Player p = e.getPlayer();
-        String[] commands = new String[]{"/back", "/home", "/pagar", "/savexp", "/sethome", "/spawn"};
         if (!Files.userdata.contains(p.getName() + ".jail")) {
             Files.userdata.set(p.getName() + ".jail", "false");
             main.files.saveFiles();
@@ -97,19 +96,6 @@ public class PlayerEvent implements Listener {
             e.setCancelled(true);
             return;
         }
-
-        if (p.getGameMode() == GameMode.CREATIVE ||
-                !Arrays.asList(commands).contains(e.getMessage().split(" ")[0])) {
-            return;
-        }
-
-        if (p.getLevel() - 1 < 0) {
-            p.sendMessage(ChatColor.RED + "Necesitas al menos un nivel de experiencia para poder usar los comandos.");
-            e.setCancelled(true);
-            return;
-        }
-
-        p.setLevel(p.getLevel() - 1);
     }
 
     @EventHandler

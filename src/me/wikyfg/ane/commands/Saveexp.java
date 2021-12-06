@@ -2,8 +2,10 @@ package me.wikyfg.ane.commands;
 
 import me.wikyfg.ane.ANEMain;
 import me.wikyfg.ane.api.ExperienceAPI;
+import me.wikyfg.ane.utils.CommandExperienceUtils;
 import me.wikyfg.ane.utils.Numeric;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,6 +28,11 @@ public class Saveexp implements CommandExecutor {
         experienceAPI = new ExperienceAPI(p);
         if (args.length != 1) {
             p.sendMessage(ChatColor.RED + "Te has confundido de argumentos, prueba a poner /saveexp <quantity>/all.");
+            return true;
+        }
+
+        if (p.getGameMode() == GameMode.SURVIVAL &&
+                !CommandExperienceUtils.Companion.onCommandExecution(p, 1)) {
             return true;
         }
 

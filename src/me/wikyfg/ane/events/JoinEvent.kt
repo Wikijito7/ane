@@ -3,6 +3,7 @@ package me.wikyfg.ane.events
 import me.wikyfg.ane.ANEMain
 import me.wikyfg.ane.api.ExperienceAPI
 import me.wikyfg.ane.files.Files
+import me.wikyfg.ane.utils.isInJail
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.event.EventHandler
@@ -19,10 +20,18 @@ class JoinEvent(private val main: ANEMain) : Listener {
                 Files.userdata["$name.homes.home"] = "none"
                 Files.userdata["$name.back"] = "${location.x},${location.y},${location.z},${location.world?.name}"
                 main.files?.saveFiles()
-                Bukkit.broadcastMessage("${ChatColor.YELLOW} ¡Bienvenido $displayName al servidor! ¡Recuerda usar /ane!")
+                Bukkit.broadcastMessage("${ChatColor.YELLOW}¡Bienvenido $displayName al servidor! ¡Recuerda usar /ane!")
 
             } else {
                 p.sendMessage("${ChatColor.GREEN}¡Recuerda usar ${ChatColor.GOLD}/ane${ChatColor.GREEN}!")
+            }
+        }
+
+        if (p.isInJail()) {
+            Bukkit.getOnlinePlayers().forEach { player ->
+                if (player.isOp) {
+                    player.sendMessage("${ChatColor.GRAY}Ha entrado ${p.name}, que está encarcelado.")
+                }
             }
         }
     }
